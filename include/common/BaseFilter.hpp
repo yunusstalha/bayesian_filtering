@@ -12,5 +12,5 @@ public:
     virtual void predict() = 0;
 
     // Correct the state and covariance based on the observation
-    virtual void correct(const Eigen::VectorXd& observation) = 0;
+    virtual void update(const Eigen::VectorXd& observation) = 0;
 };
