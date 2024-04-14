@@ -42,7 +42,7 @@ LinearKalmanFilterTest() {};    // Create a new Kalman filter instance before ea
 TEST_F(LinearKalmanFilterTest, PredictTest) {
     kf_.predict();
 
-    // TODO: Add assertions to verify the correctness of the predicted state and covariance
+    // [TODO] : Add assertions to verify the correctness of the predicted state and covariance
 }
 
 // Test case to verify the update function of LinearKalmanFilter
@@ -53,7 +53,7 @@ TEST_F(LinearKalmanFilterTest, UpdateTest) {
     kf_.predict();
     kf_.update(observation);
 
-    // TODO: Add assertions to verify the correctness of the updated state and covariance
+    // [TODO] : Add assertions to verify the correctness of the updated state and covariance
 }
 
 // Main function to run all the tests

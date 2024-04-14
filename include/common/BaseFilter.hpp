@@ -13,4 +13,8 @@ public:
 
     // Correct the state and covariance based on the observation
     virtual void update(const Eigen::VectorXd& observation) = 0;
+
+    // Acces Methods
+    virtual Eigen::VectorXd getState() const = 0;
+    virtual Eigen::MatrixXd getCovariance() const = 0;
 };
