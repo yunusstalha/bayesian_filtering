@@ -1,9 +1,16 @@
 #include "common/DataGenerator.hpp"
-
+#include <iostream>
 
 // Function to create a constant velocity model
-DynamicModel CreateConstantVelocityModel(double dt) {
+DynamicModel CreateConstantVelocityModel(Eigen::MatrixXd processNoiseCovariance, 
+                                        Eigen::MatrixXd measurementNoiseCovariance,
+                                        double dt) {
     DynamicModel model;
+    Eigen::MatrixXd measurementMatrix(2,4);
+    measurementMatrix << 1, 0, 0, 0,
+                        0, 0, 1, 0;
+
+    model.measurementMatrix = measurementMatrix;
     model.transitionMatrix = Eigen::MatrixXd::Identity(4, 4);
     model.transitionMatrix(0, 1) = dt;
     model.transitionMatrix(2, 3) = dt;
@@ -14,23 +21,27 @@ DynamicModel CreateConstantVelocityModel(double dt) {
     model.controlInputMatrix(2, 1) = dt * dt / 2;
     model.controlInputMatrix(3, 1) = dt;
 
-    model.processNoiseCovariance = Eigen::MatrixXd::Identity(2, 2);
-    model.processNoiseCovariance *= 0.1;  // Adjust this value based on expected process noise level
-
-    model.measurementMatrix = Eigen::MatrixXd::Identity(4, 4);
-
-    model.measurementNoiseCovariance = Eigen::MatrixXd::Identity(4, 4);
-    model.measurementNoiseCovariance *= 0.1;  // Adjust this value based on expected measurement noise level
+    if (processNoiseCovariance.size() > 0) {
+        model.processNoiseCovariance = processNoiseCovariance;
+    } else {
+        model.processNoiseCovariance = Eigen::MatrixXd::Identity(4, 4);
+        model.processNoiseCovariance *= 0.1;  // Adjust this value based on expected process noise level
+    }
+    if (measurementNoiseCovariance.size() > 0) {
+        model.measurementNoiseCovariance = measurementNoiseCovariance;
+    } else {
+        model.measurementNoiseCovariance = Eigen::MatrixXd::Identity(2, 2);
+        model.measurementNoiseCovariance *= 0.1;  // Adjust this value based on expected measurement noise level
+    }
 
     return model;
 }
 
 
-DataGenerator::DataGenerator(const Eigen::VectorXd& initialState)
-    : state_(initialState), distribution_(0.0, 1.0) {
+DataGenerator::DataGenerator(const DynamicModel model, Eigen::VectorXd& initialState)
+    :model_(model), state_(initialState), distribution_(0.0, 1.0) {
     std::random_device rd;
     generator_.seed(rd());
-    model_ = CreateConstantVelocityModel(1.0);  // Default model is constant velocity
 }
 
 Eigen::VectorXd DataGenerator::generateMeasurement() {
@@ -45,15 +56,13 @@ Eigen::VectorXd DataGenerator::generateMeasurement() {
 
 Eigen::VectorXd DataGenerator::step() {
     // Process noise generation
-    Eigen::VectorXd processNoise(model_.controlInputMatrix.cols());
+    Eigen::VectorXd processNoise(model_.transitionMatrix.rows());
+    // x = Ax + W (with u typically being 0 in this model)
     for (int i = 0; i < processNoise.size(); ++i) {
         processNoise(i) = std::sqrt(model_.processNoiseCovariance(i, i)) * distribution_(generator_);
     }
-    // x = Ax + Bu + W (with u typically being 0 in this model)
-    state_ = model_.transitionMatrix * state_ + model_.controlInputMatrix * processNoise;
+    state_ = model_.transitionMatrix * state_ + processNoise;
     return state_;
 }
-
-
 
 // [TODO] : Implement similar functions for constant position and constant acceleration models

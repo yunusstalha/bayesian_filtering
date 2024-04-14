@@ -40,6 +40,11 @@ public:
     // Updates the state by incorporating a new observation, adjusting the state and covariance.
     void update(const Eigen::VectorXd& observation) override;
 
+    // Accessor methods to get the current state and covariance.
+    Eigen::VectorXd getState() const  { return state_; }
+    Eigen::MatrixXd getCovariance() const override { return covariance_; }
+
+
 private:
     Eigen::VectorXd state_;            // State vector (x) of the system 
     Eigen::MatrixXd covariance_;       // Covariance matrix (P) of the state

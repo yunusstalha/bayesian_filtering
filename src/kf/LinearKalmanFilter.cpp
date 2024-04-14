@@ -1,5 +1,5 @@
 #include "kf/LinearKalmanFilter.hpp"
-
+#include <iostream>
 LinearKalmanFilter::LinearKalmanFilter(const Eigen::MatrixXd& transition, const Eigen::MatrixXd& observation,
                                        const Eigen::MatrixXd& processNoise, const Eigen::MatrixXd& measurementNoise)
     : transitionMatrix_(transition), observationMatrix_(observation),
@@ -14,9 +14,7 @@ void LinearKalmanFilter::initialize(const Eigen::VectorXd& initialState, const E
 void LinearKalmanFilter::predict() {
 // Performs the prediction step of the Kalman filter, updating the state and covariance
 // based on the model prediction alone, without incorporating new measurements.
-
     state_ = transitionMatrix_ * state_; // Predicted state estimate. x = A * x 
-
     covariance_ = transitionMatrix_ * covariance_ * transitionMatrix_.transpose() + processNoise_; // Predicted covariance estimate. P = A * P * A^T + W
 }
 

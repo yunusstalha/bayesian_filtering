@@ -12,7 +12,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(~/git/matplotlib-cpp)  # Adjust this path as necessary
 
 # Add the executable
-add_executable(demo DataGeneration.cpp)
+add_executable(demo CVKalmanFiltering.cpp)
 
 # Link the bayesian_filters library if it's needed here
 target_link_libraries(demo ${PYTHON_LIBRARIES} bayesian_filters)

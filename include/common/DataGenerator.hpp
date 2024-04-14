@@ -11,11 +11,13 @@ struct DynamicModel {
     Eigen::MatrixXd measurementMatrix;  // Measurement matrix (C)
     Eigen::MatrixXd measurementNoiseCovariance;  // Measurement noise covariance matrix (V)
 };
-
-// Class to generate data based on a dynamic model
+DynamicModel CreateConstantVelocityModel(Eigen::MatrixXd processNoiseCovariance, 
+                                        Eigen::MatrixXd measurementNoiseCovariance,
+                                        double dt);
 class DataGenerator {
 public:
-    DataGenerator(const Eigen::VectorXd& initialState);
+    
+    DataGenerator(const DynamicModel model, Eigen::VectorXd& initialState);
 
     // Generates a noisy measurement based on the current state (y = Cx + V)
     Eigen::VectorXd generateMeasurement();

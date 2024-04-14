@@ -1,7 +1,6 @@
 # Bayesian Filtering Library
 
-This project provides a robust implementation of various Bayesian filtering techniques, including Linear Kalman Filter, Extended Kalman Filter, Unscented Kalman Filter, and Particle Filter. It's designed for personal use in applications in robotics.
-
+This project provides a robust implementation of various Bayesian filtering techniques, including Linear Kalman Filter, Extended Kalman Filter, Unscented Kalman Filter, and Particle Filter. It's designed for personal use for robotics applications.  
 ## Features
 
 - **Linear Kalman Filter**: Implements the basic Kalman filter for linear models.
@@ -18,7 +17,7 @@ This project provides a robust implementation of various Bayesian filtering tech
 - C++ Compiler (g++ 9.4.0)
 - CMake (version 3.10 or higher)
 - Eigen3 Library
-- [Optional] Visualization libraries (e.g., Matplotlib C++)
+- Matplotlib C++
 
 ### Building the Project
 
@@ -32,11 +31,11 @@ make
 
 This will compile all targets defined in the project including the library, examples, and tests.
 
-### Running Tests
+### Running Examples
 
-After building, you can run the tests to ensure everything is working as expected:
+After building, you can run the examples:
 ```bash
-./tests/test_kf
+./build/examples/demo
 ```
 ## Usage
 
@@ -75,7 +74,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Authors
 
-- **Yunus Talha Erzurumlu** - *Initial work and primary developer* - [yunusstalha](https://github.com/yunusstalha)
+- **Yunus Talha Erzurumlu** - *Primary Developer* - [yunusstalha](https://github.com/yunusstalha)
 
 ## Acknowledgments
 - Thanks Dr. Umut Orguner and Dr. Emre Ozkan, for their lectures notes to make this topic clear for me.
