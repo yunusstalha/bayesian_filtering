@@ -1,0 +1,2 @@
+add_executable(test_kf TestLinearKalmanFilter.cpp)
+target_link_libraries(test_kf bayesian_filters)
