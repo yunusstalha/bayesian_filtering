@@ -3,6 +3,7 @@ file(GLOB_RECURSE SOURCES "*.cpp")
 
 add_library(bayesian_filters
     kf/LinearKalmanFilter.cpp
+    common/DataGenerator.cpp
     # Add other source files here
 )
 

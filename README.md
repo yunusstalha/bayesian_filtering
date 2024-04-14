@@ -36,7 +36,7 @@ This will compile all targets defined in the project including the library, exam
 
 After building, you can run the tests to ensure everything is working as expected:
 ```bash
-tests/.test_kf
+./tests/test_kf
 ```
 ## Usage
 
