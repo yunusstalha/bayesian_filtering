@@ -16,7 +16,7 @@
  * You should have received a copy of the MIT License
  * along with BayesianFiltering.  If not, see <https://opensource.org/licenses/MIT>.
  *
- * Author: yunsstalha 
+ * Author: yunusstalha 
  ***************************************************************************/
 
 #pragma once
